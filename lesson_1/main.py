@@ -1,7 +1,8 @@
 from datetime import datetime
 
+
 class Car:
-  def __init__(self, brand: str, model: str, color: str, year: int | str, started: bool):
+  def __init__(self, model: str, brand: str, color: str, year: int | str, started: bool):
     self.brand = brand
     self.model = model
     self.color = color
@@ -10,8 +11,7 @@ class Car:
 
   def start(self):
     self.started = True
-    print('br br br start')
-    return self
+    return 'br br br start'
 
   def stop(self):
     self.started = False
@@ -24,7 +24,7 @@ class Car:
   # 2.3
   def get_age(self):
     current_year = int(datetime.now().year)
-    return current_year - self.year # if it will be for age of man, we should count months and days too
+    return current_year - self.year
 
   # 2.4
   def set_color(self, color: str):
