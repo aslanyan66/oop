@@ -38,5 +38,6 @@ print(D.mro())
     pisat kod   -> писат код :)
 
 2.5 Որոշեք թե translate ու write method-ներից որը պետք է լինի abstract և որը սովորական method
+
 Research
 1. super() in multiple inheritance
