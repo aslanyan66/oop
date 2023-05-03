@@ -56,5 +56,5 @@ print('Model S' in tesla)
 #	1. __call__ method:
 # __call__ methodov hnaravorutyun enq talis instance-in iran function-i nman kanchelu u voroshum enq te inch lini et jamanak
 #	2. <, >, operators
-# __lt__-n less thanna kashxati poqri nshani jamanak, __gt__n kashxati meci nshani jamanak.. aysinqn tuyla talis voroshenq te
+# __lt__-n less than-na kashxati poqri nshani jamanak, __gt__n kashxati meci nshani jamanak.. aysinqn tuyla talis voroshenq te
 # instancenerin hamemateluc meci kam poqri nshanov inch pahaladzev unen tvyal instancenery

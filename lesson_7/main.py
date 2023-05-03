@@ -1,7 +1,7 @@
 # Task 1
 
-# __getattr__-n kancvhvuma erp vor inchvor attribut enq get anum, __getattribute__-el en jamanak erpvor chi gtnum attributy
-
+# __getattr__-n kancvhvuma erp vor inchvor attribut enq get anum u chi linum, __getattribute__-el en jamanak erpvor linuma attributy
+# bayc ete attributy chka u erku methodnel grelenq prioritety __getattribute__ -inna
 
 # Task 2
 
@@ -12,6 +12,7 @@
 
 from typing import Literal
 
+
 class God:
   def __init__(self, first_name: str, count_of_hands: int, super_power: str):
     self.first_name = first_name
@@ -20,16 +21,16 @@ class God:
 
   def clap(self):
     if self.count_of_hands >= 2:
-      self._voice_after_clap()
+      self.__voice_after_clap()
 
-  def _voice_after_clap(self):
+  def __voice_after_clap(self):
     return 'ճլտ'
 
   def _get_access_modifiers(self, modifier: Literal['public', 'private', 'protected']):
     is_current_modifier = {
-      'public': lambda name: name[0] != '_',
-      'protected': lambda name: name[0] == '_' and name[1] != '_',
-      'private': lambda name: name[0:2] == '__',
+      'public': lambda name, class_name: name[0] != '_',
+      'protected': lambda name, class_name: class_name not in name and name[0] == '_' and name[1] != '_',
+      'private': lambda name, class_name: class_name in name,
     }
     props = []
     for current_class in self.__class__.mro():
@@ -37,7 +38,7 @@ class God:
         continue
 
       for key, value in current_class.__dict__.items():
-        if is_current_modifier[modifier](key):
+        if is_current_modifier[modifier](key, current_class.__name__):
           props.append({key: value})
 
     return props
@@ -62,7 +63,7 @@ class Zeus(God):
 
 
 class Herkules(Zeus):
-  
+
   def __init__(self, **kwargs):
     super().__init__(**kwargs)
 
@@ -78,10 +79,9 @@ class Herkules(Zeus):
 
 hercules = Herkules(**{'first_name': 'herco', 'count_of_hands': 2, 'super_power': 'moshni'})
 
-print(hercules.get_public())
-print(hercules.get_protected())
-print(hercules.get_private())
-
+print(hercules.get_public(), 'public')
+print(hercules.get_protected(), 'protected')
+print(hercules.get_private(), 'private')
 
 # Research
 # 	1.	__slots__ attribute:

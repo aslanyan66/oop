@@ -25,19 +25,24 @@
 
 from abc import ABC, abstractmethod
 
+
 class AbstractFile(ABC):
-  english_alphabet = ['a', 'b', 'w', 'g', 'd', 'e', 'yo', 'j', 'z', 'i', 'ih', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'shy', 'ii', 'e', 'yu', 'ya']
-  russian_alphabet = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ы', 'э', 'ю', 'я']
+  english_alphabet = ['a', 'b', 'w', 'g', 'd', 'e', 'yo', 'j', 'z', 'i', 'ih', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's',
+                      't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'shy', 'ii', 'e', 'yu', 'ya']
+  russian_alphabet = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с',
+                      'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ы', 'э', 'ю', 'я']
 
   alphabets = dict(zip(english_alphabet, russian_alphabet))
   alphabets.update(dict(zip(russian_alphabet, english_alphabet)))
+
   @abstractmethod
   def translate(self, text):
     pass
 
-  @abstractmethod
-  def write(self, text):
-    pass
+  def write(self, text, file_path):
+    with open(file_path, 'a', encoding='utf-8') as file:
+      file.write(f'{text}\n')
+
 
 # 2.1
 
@@ -57,10 +62,8 @@ class EnglishFile(AbstractFile):
     return english_text
 
   # 2.3
-  def write(self, text):
-    print('write')
-    with open('english_file.txt', 'a') as eng_file:
-      eng_file.write(f'{text}\n')
+  def write(self, text, file_path = 'english_file.txt'):
+    super().write(text, file_path)
 
 
 class RussianFile(AbstractFile):
@@ -79,11 +82,8 @@ class RussianFile(AbstractFile):
     return russian_text
 
   # 2.4
-  def write(self, text):
-    with open('russian_file.txt', 'a', encoding='utf-8') as russian_file:
-      russian_file.write(f'{text}\n')
-
-
+  def write(self, text, file_path = 'russian_file.txt'):
+    super().write(text, file_path)
 
 # english_file = EnglishFile()
 # russian_file = RussianFile()
