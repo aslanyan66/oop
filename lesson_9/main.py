@@ -9,6 +9,7 @@ __del__-@ destructora aysinqn instance-i lifesycle u kanchvuma instance-i jnjvel
 isk __delete__-@ kanchvuma attributy jnjeluc arach
 '''
 
+
 # Task 2.~
 
 class FileError(Exception):
@@ -20,10 +21,13 @@ class FileError(Exception):
 
 
 class SingleError(FileError):
-  pass
+  def __init__(self, line: int, file_name: str):
+    self.message = f'We came a cross to error on {line} line in {file_name.lower()} file.'
+
 
 class ManyErrors(FileError):
-  pass
+  def __init__(self, lines: int, file_name: str):
+    self.message = f'We came a cross to error on {",".join(lines)} lines in {file_name.lower()} file.'
 
 
 # Task 2
@@ -32,11 +36,14 @@ class FileDescriptor:
   def __get__(self, instance, owner):
     with open(f'{instance.__class__.__name__.lower()}.txt', 'a') as file:
       return file
+
   def __set__(self, instance, value):
     with open(f'{instance.__class__.__name__.lower()}.txt', 'w') as file:
       self._file = file
+
   def __delete__(self, instance):
     os.remove(f'{instance.__class__.__name__}.txt')
+
 
 class ChildFileDescriptor:
   def __get__(self, instance, owner):
@@ -48,10 +55,11 @@ class ChildFileDescriptor:
 
       if errors_count == 1:
         error_line = errors[0][0]
-        raise SingleError(f'We came a cross to error on {error_line} line in {owner.__name__.lower()} file.')
+        raise SingleError(**{'line': error_line, 'file_name': owner.__name__.lower()})
+
       elif errors_count > 1:
         error_lines = list(map(lambda value: value[0], errors))
-        raise SingleError(f'We came a cross to errors on {",".join(error_lines)} lines in {owner.__name__.lower()} file.')
+        raise ManyErrors(**{'lines': error_lines, 'file_name': owner.__name__.lower()})
 
       return text
 
@@ -62,16 +70,19 @@ class ChildFileDescriptor:
   def __delete__(self, instance):
     os.remove(f'{instance.__class__.__name__}.txt')
 
-class File:
 
+class File:
   file = FileDescriptor()
   child_file = ChildFileDescriptor()
+
 
 class Tesla(File):
   pass
 
+
 class Lexus(File):
   pass
+
 
 # tesla = Tesla()
 # print(tesla.child_file)  # 1,Model_S,Sedan,Electric ...
