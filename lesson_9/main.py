@@ -99,6 +99,5 @@ class Lexus(File):
 
 try:
   tesla = Tesla()
-  tesla.child_file
 except FileError as err:
   print(err, 'errrorrrrr')
