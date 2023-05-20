@@ -6,9 +6,9 @@ def handle_error_decorator(func):
   def wrapper(*args, **kwargs):
     try:
       return func(*args, **kwargs)
-    except Exception as message:
+    except Exception as e:
       with open('log.txt', 'a') as log_file:
-        log_file.write(f'{message} {datetime.now()}\n')
+        log_file.write(f'{e} | {datetime.now()}\n')
 
   return wrapper
 

@@ -8,11 +8,11 @@ from decorators import sensitive_data_decorator, handle_error_decorator
 def get_sensitive_data():
   with open('passwords.txt') as passwords_file:
     result = []
-    for line in enumerate(passwords_file):
-      if line[0] == 0:
-        continue
 
-      [name, password] = line[1].strip().split(',')
+    for index, line in enumerate(passwords_file):
+      if index == 0:
+        continue
+      name, password = line.strip().split(',')
       result.append({name: password})
   return result
 
