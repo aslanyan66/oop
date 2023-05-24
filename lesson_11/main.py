@@ -4,12 +4,13 @@ from decorators import sensitive_data_decorator, handle_error_decorator
 # Task 1
 
 @handle_error_decorator
-@sensitive_data_decorator(11)
+@sensitive_data_decorator(8)
 def get_sensitive_data():
   with open('passwords.txt') as passwords_file:
     result = []
 
     for index, line in enumerate(passwords_file):
+      print(type(index))
       if index == 0:
         continue
       name, password = line.strip().split(',')
