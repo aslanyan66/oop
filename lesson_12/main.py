@@ -31,3 +31,25 @@ obj = MyClass()  # Outputs: "Creating a new instance" followed by "Initializing 
   , root object-i __new__ methody allocate-a anum taracq hishoxutyan mech , stexcuma nor object u talisa __init__-in vornel patasxanatuya,
   attributneri stexcman hamar
 '''
+
+print('\n********* 12 part 2 *********\n')
+class Meta(type):
+  def __new__(meta, class_name, supers, class_dict):
+      return type.__new__(meta, class_name, supers, class_dict)
+
+  def __call__(self, *args, **kwargs):
+    if not hasattr(self.__class__, 'instance'):
+      self.__class__.instance = type.__call__(self, *args, **kwargs)
+
+    return self.__class__.instance
+
+class Logger(metaclass=Meta):
+  pass
+
+
+a = Logger()
+b = Logger()
+c = Logger()
+d = Logger()
+
+print(a == b == c == d)
